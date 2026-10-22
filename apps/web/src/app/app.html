@@ -1,0 +1,31 @@
+<main>
+  <h1>k8s-gitops-lab</h1>
+
+  @if (info(); as info) {
+    <dl>
+      <dt>Environment</dt>
+      <dd>{{ info.environment }}</dd>
+      <dt>Version</dt>
+      <dd>{{ info.version }}</dd>
+      <dt>Pod</dt>
+      <dd><code>{{ info.pod }}</code></dd>
+      <dt>Node</dt>
+      <dd><code>{{ info.node }}</code></dd>
+    </dl>
+  }
+
+  @if (error(); as error) {
+    <p class="error">{{ error }}</p>
+  }
+
+  <button type="button" (click)="load()" [disabled]="loading()">Which pod answered?</button>
+
+  @if (pods().length) {
+    <h2>Responses by pod</h2>
+    <ul>
+      @for (pod of pods(); track pod.name) {
+        <li><code>{{ pod.name }}</code> <span>{{ pod.count }}</span></li>
+      }
+    </ul>
+  }
+</main>

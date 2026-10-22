@@ -1,0 +1,51 @@
+main {
+  max-width: 40rem;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.5rem 1.5rem;
+}
+
+dt {
+  color: #6b7280;
+}
+
+dd {
+  margin: 0;
+}
+
+button {
+  margin-top: 1.5rem;
+  padding: 0.6rem 1.2rem;
+  border: 0;
+  border-radius: 0.375rem;
+  background: #326ce5;
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.error {
+  color: #b91c1c;
+}
