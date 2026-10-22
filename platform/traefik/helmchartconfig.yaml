@@ -7,6 +7,11 @@ spec:
   valuesContent: |-
     deployment:
       replicas: 2
+      # Keep serving while the pod is removed from Service endpoints on every node.
+      lifecycle:
+        preStop:
+          sleep:
+            seconds: 10
     podDisruptionBudget:
       enabled: true
       maxUnavailable: 1
