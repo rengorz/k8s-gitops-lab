@@ -24,6 +24,6 @@ patches:
         value: prod.lab.localhost
 images:
   - name: ghcr.io/rengorz/k8s-gitops-lab-api
-    newTag: latest
+    newTag: sha-a450c5e
   - name: ghcr.io/rengorz/k8s-gitops-lab-web
-    newTag: latest
+    newTag: sha-a450c5e
