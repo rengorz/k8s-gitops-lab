@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+labels:
+  - pairs:
+      app.kubernetes.io/part-of: k8s-gitops-lab
+    includeSelectors: false
+resources:
+  - api-deployment.yaml
+  - api-service.yaml
+  - api-pdb.yaml
+  - api-servicemonitor.yaml
+  - web-deployment.yaml
+  - web-service.yaml
+  - ingress.yaml

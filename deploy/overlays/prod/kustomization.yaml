@@ -1,0 +1,30 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: lab-prod
+resources:
+  - ../../base
+  - api-hpa.yaml
+configMapGenerator:
+  - name: api-config
+    literals:
+      - APP_ENV=prod
+      - APP_VERSION=0.1.0
+      - SHUTDOWN_DELAY_MS=10000
+replicas:
+  - name: api
+    count: 3
+  - name: web
+    count: 2
+patches:
+  - target:
+      kind: Ingress
+      name: lab
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: prod.lab.localhost
+images:
+  - name: ghcr.io/rengorz/k8s-gitops-lab-api
+    newTag: latest
+  - name: ghcr.io/rengorz/k8s-gitops-lab-web
+    newTag: latest
