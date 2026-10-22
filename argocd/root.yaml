@@ -16,3 +16,10 @@ spec:
     automated:
       prune: true
       selfHeal: true
+    # Waves wait for child apps to become healthy, which can take long on a cold cluster.
+    retry:
+      limit: -1
+      backoff:
+        duration: 10s
+        factor: 2
+        maxDuration: 3m
