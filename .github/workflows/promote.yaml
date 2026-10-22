@@ -1,0 +1,37 @@
+name: promote-to-prod
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Copy image tags from dev to prod
+        id: images
+        env:
+          DEV: deploy/overlays/dev/kustomization.yaml
+        run: |
+          yq -i '.images = load(strenv(DEV)).images' deploy/overlays/prod/kustomization.yaml
+          {
+            echo "list<<EOF"
+            yq '.images[] | "- " + .name + ":" + .newTag' deploy/overlays/prod/kustomization.yaml
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+      - uses: peter-evans/create-pull-request@v7
+        with:
+          branch: promote/prod
+          delete-branch: true
+          commit-message: "chore(prod): promote images from dev"
+          title: "chore(prod): promote images from dev"
+          body: |
+            Promotes the images currently running in dev to prod:
+
+            ${{ steps.images.outputs.list }}
+
+            Merging this PR deploys to `lab-prod`.
