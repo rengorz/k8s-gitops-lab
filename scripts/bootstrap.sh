@@ -17,9 +17,9 @@ fi
 echo "==> Installing Argo CD"
 kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
 kubectl apply -k argocd/install --server-side --force-conflicts
-kubectl -n argocd rollout status deploy/argocd-server --timeout=300s
-kubectl -n argocd rollout status deploy/argocd-repo-server --timeout=300s
-kubectl -n argocd rollout status statefulset/argocd-application-controller --timeout=300s
+kubectl -n argocd rollout status deploy/argocd-server --timeout=900s
+kubectl -n argocd rollout status deploy/argocd-repo-server --timeout=900s
+kubectl -n argocd rollout status statefulset/argocd-application-controller --timeout=900s
 
 echo "==> Applying root application"
 kubectl apply -f argocd/root.yaml
