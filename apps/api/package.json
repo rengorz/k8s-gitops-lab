@@ -1,0 +1,16 @@
+{
+  "name": "lab-api",
+  "version": "1.0.0",
+  "description": "Small REST API for the k8s-gitops-lab: health probes, Prometheus metrics, pod info",
+  "main": "src/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "express": "^4.21.2",
+    "prom-client": "^15.1.3"
+  }
+}
