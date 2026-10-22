@@ -7,7 +7,6 @@ configMapGenerator:
   - name: api-config
     literals:
       - APP_ENV=dev
-      - APP_VERSION=0.1.0
       - SHUTDOWN_DELAY_MS=5000
 replicas:
   - name: api
