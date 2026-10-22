@@ -2,7 +2,7 @@ ENV ?= dev
 REQUESTS ?= 500
 CONCURRENCY ?= 10
 
-.PHONY: help up down status argocd-ui logs-dev load test-api
+.PHONY: help up down status argocd-ui logs-dev load test
 
 help: ## Show available targets
 	@grep -E '^[a-z-]+:.*##' $(MAKEFILE_LIST) | awk -F ':.*## ' '{printf "%-12s %s\n", $$1, $$2}'
@@ -27,5 +27,8 @@ logs-dev: ## Follow API logs in dev
 load: ## Generate traffic, e.g. make load ENV=prod REQUESTS=5000 CONCURRENCY=20
 	./scripts/load-test.sh $(ENV) $(REQUESTS) $(CONCURRENCY)
 
-test-api: ## Run API unit tests
-	cd apps/api && npm ci && npm test
+test: ## Run api and web unit tests in a Node 22 container
+	docker run --rm -v "$(CURDIR)/apps/api:/app" -v /app/node_modules -w /app node:22-alpine \
+		sh -c "npm ci --no-audit --no-fund && npm test"
+	docker run --rm -v "$(CURDIR)/apps/web:/app" -v /app/node_modules -w /app node:22-alpine \
+		sh -c "npm ci --no-audit --no-fund && npm test -- --watch=false"
